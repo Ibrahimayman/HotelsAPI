@@ -1,5 +1,7 @@
 using HotelListing.Configurations;
 using HotelListing.Data;
+using HotelListing.IRepository;
+using HotelListing.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -14,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace HotelListing
 {
@@ -38,6 +41,8 @@ namespace HotelListing
             
             services.AddAutoMapper(typeof(MapperInitilizer));
 
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
             services.AddCors(o => {
                 o.AddPolicy("AllowAll", builder =>
                     builder.AllowAnyOrigin()
@@ -49,6 +54,12 @@ namespace HotelListing
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelListing", Version = "v1" });
             });
+
+
+            services.AddControllers().AddNewtonsoftJson(op =>
+              op.SerializerSettings.ReferenceLoopHandling =
+                  Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,6 +86,7 @@ namespace HotelListing
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }
