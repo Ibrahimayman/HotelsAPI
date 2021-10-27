@@ -4,14 +4,16 @@ using HotelListing.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HotelListing.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20211027194734_seddingData")]
+    partial class seddingData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,15 +140,15 @@ namespace HotelListing.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "def96510-f54b-4070-b384-b09673dbd47b",
-                            ConcurrencyStamp = "9833e286-0392-4daf-8b4b-fcbce21f7040",
+                            Id = "76441e8f-3e98-4d08-9cd7-34b0de3a7d3f",
+                            ConcurrencyStamp = "adb8b1b8-7601-4e8b-8d92-2f8f7a135a36",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "3de0b000-787a-43f4-9c42-6c43373e21b2",
-                            ConcurrencyStamp = "97b63231-f52e-4a8b-b9b2-ce9499ca4d18",
+                            Id = "f6e82d57-b1d7-479a-9507-4bb7d2bb47f4",
+                            ConcurrencyStamp = "d7a0264b-f2f4-451f-8816-56aa4d31c240",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -186,10 +188,6 @@ namespace HotelListing.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -243,8 +241,6 @@ namespace HotelListing.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -325,19 +321,6 @@ namespace HotelListing.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("HotelListing.Data.ApiUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("ApiUser");
                 });
 
             modelBuilder.Entity("HotelListing.Data.Hotel", b =>

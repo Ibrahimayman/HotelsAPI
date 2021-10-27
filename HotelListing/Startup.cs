@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using HotelListing.Services;
 
 namespace HotelListing
 {
@@ -37,11 +38,15 @@ namespace HotelListing
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddAuthentication();
+            services.ConfigureIdentity();
+            services.ConfigureJWT(Configuration);
+
             services.AddControllers();
             
             services.AddAutoMapper(typeof(MapperInitilizer));
-
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAuthManager, AuthManager>();
 
             services.AddCors(o => {
                 o.AddPolicy("AllowAll", builder =>
